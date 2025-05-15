@@ -422,10 +422,10 @@ document.addEventListener('DOMContentLoaded', () => {
         
         validPosition = true;
         for (const area of occupiedAreas) {
-          if (!(left > area.right + 10 || 
-                left + maxW < area.left - 10 || 
-                top > area.bottom + 10 || 
-                top + maxH < area.top - 10)) {
+          if (!(left > area.right + 20 || 
+                left + maxW < area.left - 20 || 
+                top > area.bottom + 20 || 
+                top + maxH < area.top - 20)) {
             validPosition = false;
             break;
           }
@@ -445,7 +445,7 @@ document.addEventListener('DOMContentLoaded', () => {
       img.style.left = `${left}px`;
 
       const finalScale = 0.9 + Math.random() * 0.4; 
-      const finalRotation = (Math.random() * 30) - 30; 
+      const finalRotation = (Math.random() * 60) - 30; 
 
       img.style.setProperty('--final-scale', finalScale);
       img.style.setProperty('--final-rotation', `${finalRotation}deg`);
