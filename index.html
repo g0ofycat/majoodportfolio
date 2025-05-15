@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>majood</title>
+    <link rel="preconnect" href="https://github.githubassets.com" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="icon" type="image/png" href="./Pictures/Logo.png" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript
+      ><link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    /></noscript>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript
+      ><link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    /></noscript>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="script.js" defer></script>
+    <script src="typewriter.js" defer></script>
+    <script src="dropdown.js" defer></script>
+    <script src="slideshow.js" defer></script>
+    <script src="imageViewer.js" defer></script>
+  </head>
+  <body>
+    <canvas id="canvas-webgl" class="p-canvas-webgl"></canvas>
+    <div class="logo-container" id="logo">
+      <img src="./Pictures/PFP.png" alt="Logo" class="logo" />
+      <div class="text-container">
+        <h1 class="title">
+          <span class="title-text"></span
+          ><span class="cursor title-cursor">|</span>
+        </h1>
+        <p class="subtitle">
+          <span class="subtitle-text"></span
+          ><span class="cursor subtitle-cursor">|</span>
+        </p>
+      </div>
+      <div class="dropdown" id="dropdown">
+        <ul class="dropdown-menu">
+          <li>
+            <a href="https://x.com/biggiedagg45807" target="_blank"
+              ><img
+                src="Pictures/XLogo.png"
+                alt="Twitter"
+                style="width: 25px; height: 25px"
+              />
+              <b>X (Twitter)</b></a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.discord.com/users/784814484229062667"
+              target="_blank"
+              ><img
+                src="Pictures/Discord.png"
+                alt="Discord"
+                style="width: 25px; height: 25px"
+              />
+              <b>Discord</b></a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.roblox.com/users/532260868/profile"
+              target="_blank"
+              ><img
+                src="Pictures/Roblox.png"
+                alt="Roblox"
+                style="width: 25px; height: 25px"
+              />
+              <b>Roblox</b></a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.artstation.com/easywin"
+              target="_blank"
+              ><img
+                src="Pictures/Artstation.png"
+                alt="Artstation"
+                style="width: 25px; height: 25px"
+              />
+              <b>ArtStation</b></a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+    <section class="slideshow-container">
+      <h2 class="slideshow-title">Featured Works</h2>
+      <div class="slideshow-wrapper">
+        <div class="slideshow">
+          <div class="slides">
+            <img
+              src="Pictures/FeaturedWork1.jpg"
+              class="slide"
+              data-description="Stylized scene - Made this stylized scene with my mentor Greyyscaled."
+            />
+            <img
+              src="Pictures/FeaturedWork2.jpg"
+              class="slide"
+              data-description="Corrupted City - 1000x1000 Full detailed City Map for Roblox."
+            />
+            <img
+              src="Pictures/FeaturedWork3.jpg"
+              class="slide"
+              data-description="Bomb Ball - Epic Minigames."
+            />
+            <img
+              src="Pictures/FeaturedWork4.jpg"
+              class="slide"
+              data-description="Beast Games - Concept map of Beast Games."
+            />
+            <img
+              src="Pictures/FeaturedWork5.jpg"
+              class="slide"
+              data-description="A Wavy Trip - Remake of the lobby."
+            />
+          </div>
+        </div>
+        <button class="prev">❮</button>
+        <button class="next">❯</button>
+      </div>
+      <div class="slide-description"></div>
+    </section>
+    <section class="content-section about-me-section">
+      <h2 class="section-title">About Me</h2>
+      <div class="about-me-content">
+        <img
+          src="Pictures/PFP.png"
+          alt="Majood - Profile Picture"
+          class="about-me-image"
+        />
+        <p>
+          <b>I'm a 15-year-old Roblox architect</b> specializing in custom
+          builds in Roblox Studio since 2018, with a professional focus since
+          2021.<br />
+          I’ve completed around <b>70 commissions</b> for various studios and
+          brands, including collaborations with
+          <b>Exclusible S.A (Louboutin)</b> and
+          <b>Yama Studio (Camden Grave)</b>.<br />
+          I'm experienced in creating
+          <b>unique environments for Roblox-based advertising</b> and am open to
+          new projects.<br /><br />
+          If you're interested in collaborating, reach out via <b>Discord</b> or
+          <b>email</b>.<br />
+          <b>Let’s create something exceptional!</b>
+        </p>
+      </div>
+    </section>
+    <section class="content-section pricing-section">
+      <h2 class="section-title">Pricing & Commissions</h2>
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <h3 class="pricing-tier-title">Starter Kit</h3>
+          <p class="pricing-price">$200 - $500</p>
+          <ul class="pricing-features">
+            <li><i class="fas fa-check"></i> Small Custom Asset(s)</li>
+            <li><i class="fas fa-check"></i> Basic Environment Prop</li>
+            <li><i class="fas fa-check"></i> Conceptual Sketch to Model</li>
+            <li><i class="fas fa-times"></i> Large Scale Scenes</li>
+          </ul>
+          <a
+            href="https://www.discord.com/users/784814484229062667"
+            target="_blank"
+            class="cta-button"
+            >Discuss on Discord</a
+          >
+        </div>
+        <div class="pricing-card featured-card">
+          <span class="featured-badge">Popular</span>
+          <h3 class="pricing-tier-title">Standard Project</h3>
+          <p class="pricing-price">$500 - $1000</p>
+          <ul class="pricing-features">
+            <li><i class="fas fa-check"></i> Medium Detail Scene/Map Area</li>
+            <li><i class="fas fa-check"></i> Multiple Custom Assets</li>
+            <li><i class="fas fa-check"></i> Optimized for Performance</li>
+            <li><i class="fas fa-check"></i> Thematic Cohesion</li>
+          </ul>
+          <a
+            href="https://www.discord.com/users/784814484229062667"
+            target="_blank"
+            class="cta-button"
+            >Get a Quote</a
+          >
+        </div>
+        <div class="pricing-card">
+          <h3 class="pricing-tier-title">Premium Build</h3>
+          <p class="pricing-price">$1000+</p>
+          <ul class="pricing-features">
+            <li><i class="fas fa-check"></i> Large Scale Detailed Map</li>
+            <li>
+              <i class="fas fa-check"></i> Advanced Custom Assets & Textures
+            </li>
+            <li><i class="fas fa-check"></i> Interactive Elements (Design)</li>
+            <li><i class="fas fa-check"></i> Priority Support</li>
+          </ul>
+          <a
+            href="https://www.discord.com/users/784814484229062667"
+            target="_blank"
+            class="cta-button"
+            >Start Premium Project</a
+          >
+        </div>
+      </div>
+      <p class="pricing-note">
+        All prices are estimates. Final cost depends on project complexity and
+        specific requirements. Contact me for a personalized quote!
+      </p>
+    </section>
+
+    <div id="image-viewer-overlay" class="image-viewer-overlay">
+        </div>
+    </body>
+</html>
