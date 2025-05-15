@@ -382,7 +382,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const imageViewerOverlay = document.getElementById('image-viewer-overlay');
   const body = document.body;
 
-  /** Opens the scatter view */
   function openScatteredView(imagePaths) {
     imageViewerOverlay.innerHTML = '';
 
@@ -470,32 +469,39 @@ document.addEventListener('DOMContentLoaded', () => {
   function closeScatteredView() {
     imageViewerOverlay.classList.remove('active');
     body.classList.remove('viewer-active');
-    imageViewerOverlay.addEventListener('transitionend', function clear() {
-      if (!imageViewerOverlay.classList.contains('active')) {
+
+    const images = imageViewerOverlay.querySelectorAll('.scattered-image');
+    images.forEach(img => img.classList.remove('visible'));
+
+    const transitionDuration = 400;
+    const timeoutId = setTimeout(() => {
+      imageViewerOverlay.style.display = 'none';
+      imageViewerOverlay.innerHTML = '';
+    }, transitionDuration);
+
+    imageViewerOverlay.addEventListener('transitionend', function clear(event) {
+      if (event.propertyName === 'opacity' && !imageViewerOverlay.classList.contains('active')) {
+        clearTimeout(timeoutId);
         imageViewerOverlay.style.display = 'none';
         imageViewerOverlay.innerHTML = '';
+        imageViewerOverlay.removeEventListener('transitionend', clear);
       }
-      imageViewerOverlay.removeEventListener('transitionend', clear);
-    });
+    }, { once: true });
   }
 
   mainSlides.forEach(slide => {
     slide.addEventListener('click', () => {
-
       const srcPath = slide.getAttribute('src') || slide.style.backgroundImage;
       let file;
       
       if (srcPath.includes('url(')) {
-
         file = srcPath.split('/').pop().replace(')', '').replace(/["']/g, '');
       } else {
-
         file = srcPath.split('/').pop();
       }
       
       const extra = extraImagesData[file];
-      extra ? openScatteredView(extra) :
-              console.warn('No extra images for', file);
+      extra ? openScatteredView(extra) : console.warn('No extra images for', file);
     });
   });
 
