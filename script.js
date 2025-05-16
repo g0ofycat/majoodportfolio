@@ -1,18 +1,18 @@
 class Plane {
-    constructor() {
-        this.uniforms = {
-            time: { type: 'f', value: 0 },
-            opacity: { type: 'f', value: 0 },
-        };
-        this.mesh = this.createMesh();
-        this.time = 1;
-    }
-    createMesh() {
-        return new THREE.Mesh(
-            new THREE.PlaneGeometry(256, 256, 256, 256),
-            new THREE.RawShaderMaterial({
-                uniforms: this.uniforms,
-                vertexShader: `
+  constructor() {
+    this.uniforms = {
+      time: { type: "f", value: 0 },
+      opacity: { type: "f", value: 0 },
+    };
+    this.mesh = this.createMesh();
+    this.time = 1;
+  }
+  createMesh() {
+    return new THREE.Mesh(
+      new THREE.PlaneGeometry(256, 256, 256, 256),
+      new THREE.RawShaderMaterial({
+        uniforms: this.uniforms,
+        vertexShader: `
                     #define GLSLIFY 1
                     attribute vec3 position;
                     uniform mat4 projectionMatrix;
@@ -108,7 +108,7 @@ class Plane {
                         gl_Position = projectionMatrix * modelViewMatrix * vec4(lastPosition, 1.0);
                     }
                 `,
-                fragmentShader: `
+        fragmentShader: `
                     precision highp float;
                     #define GLSLIFY 1
                     varying vec3 vPosition;
@@ -119,398 +119,416 @@ class Plane {
                         gl_FragColor = vec4(color, baseOpacity * opacity);
                     }
                 `,
-                transparent: true,
-                wireframe: true
-            })
-        );
-    }
-    render(time) {
-        this.uniforms.time.value += time * this.time;
-    }
-    setOpacity(value) {
-        this.uniforms.opacity.value = value;
-    }
+        transparent: true,
+        wireframe: true,
+      })
+    );
+  }
+  render(time) {
+    this.uniforms.time.value += time * this.time;
+  }
+  setOpacity(value) {
+    this.uniforms.opacity.value = value;
+  }
 }
 
-const canvas = document.getElementById('canvas-webgl');
+const canvas = document.getElementById("canvas-webgl");
 const renderer = new THREE.WebGLRenderer({
-    antialias: false,
-    canvas: canvas,
+  antialias: false,
+  canvas: canvas,
 });
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
+const camera = new THREE.PerspectiveCamera(
+  45,
+  window.innerWidth / window.innerHeight,
+  1,
+  10000
+);
 const clock = new THREE.Clock();
 
 const plane = new Plane();
 
 const resizeWindow = () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
 };
 
 const on = () => {
-    window.addEventListener('resize', resizeWindow);
+  window.addEventListener("resize", resizeWindow);
 };
 
 const render = () => {
-    plane.render(clock.getDelta());
-    renderer.render(scene, camera);
+  plane.render(clock.getDelta());
+  renderer.render(scene, camera);
 };
 
 const renderLoop = () => {
-    render();
-    requestAnimationFrame(renderLoop);
+  render();
+  requestAnimationFrame(renderLoop);
 };
 
 const init = () => {
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0x000000, 1.0);
-    camera.position.set(0, 16, 128);
-    camera.lookAt(new THREE.Vector3(0, 40, 0));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setClearColor(0x000000, 1.0);
+  camera.position.set(0, 16, 128);
+  camera.lookAt(new THREE.Vector3(0, 40, 0));
 
-    scene.add(plane.mesh);
+  scene.add(plane.mesh);
 
-    on();
-    resizeWindow();
-    renderLoop();
+  on();
+  resizeWindow();
+  renderLoop();
 };
 
 init();
 
-document.addEventListener('DOMContentLoaded', () => {
-    const titleElement = document.querySelector('.title-text');
-    const subtitleElement = document.querySelector('.subtitle-text');
-    const titleCursor = document.querySelector('.title-cursor');
-    const subtitleCursor = document.querySelector('.subtitle-cursor');
-    const slideshow = document.querySelector('.slideshow-container');
-    const aboutSection = document.querySelector('.about-me-section');
-    const pricingSection = document.querySelector('.pricing-section');
+document.addEventListener("DOMContentLoaded", () => {
+  const titleElement = document.querySelector(".title-text");
+  const subtitleElement = document.querySelector(".subtitle-text");
+  const titleCursor = document.querySelector(".title-cursor");
+  const subtitleCursor = document.querySelector(".subtitle-cursor");
+  const slideshow = document.querySelector(".slideshow-container");
+  const aboutSection = document.querySelector(".about-me-section");
+  const pricingSection = document.querySelector(".pricing-section");
 
-    const titleText = 'majood';
-    const subtitleText = 'Builder & Architect';
-    const typingSpeed = 30;
-    const pauseDuration = 400;
-    const fadeInDuration = 1000;
-    const fadeInDelay = 200;
-    const initialScale = 0.9; 
+  const titleText = "majood";
+  const subtitleText = "Builder & Architect";
+  const typingSpeed = 30;
+  const pauseDuration = 400;
+  const fadeInDuration = 1000;
+  const fadeInDelay = 200;
+  const initialScale = 0.9;
 
-    let titleIndex = 0;
-    let subtitleIndex = 0;
+  let titleIndex = 0;
+  let subtitleIndex = 0;
 
-    titleCursor.style.color = '#ffffff';
-    subtitleCursor.style.color = '#ffffff';
+  titleCursor.style.color = "#ffffff";
+  subtitleCursor.style.color = "#ffffff";
 
-    function typeTitle() {
-        if (titleIndex < titleText.length) {
-            titleElement.textContent += titleText[titleIndex];
-            titleIndex++;
-            setTimeout(typeTitle, typingSpeed);
-        } else {
-            titleCursor.classList.add('hidden');
-            subtitleCursor.classList.remove('hidden');
-            subtitleCursor.style.color = '#333333';
-            setTimeout(typeSubtitle, pauseDuration);
-        }
+  function typeTitle() {
+    if (titleIndex < titleText.length) {
+      titleElement.textContent += titleText[titleIndex];
+      titleIndex++;
+      setTimeout(typeTitle, typingSpeed);
+    } else {
+      titleCursor.classList.add("hidden");
+      subtitleCursor.classList.remove("hidden");
+      subtitleCursor.style.color = "#333333";
+      setTimeout(typeSubtitle, pauseDuration);
     }
+  }
 
-    function typeSubtitle() {
-        if (subtitleIndex < subtitleText.length) {
-            subtitleElement.textContent += subtitleText[subtitleIndex];
-            subtitleIndex++;
-            setTimeout(typeSubtitle, typingSpeed);
-        } else {
-            subtitleCursor.classList.add('hidden');
-            setTimeout(startFadeIn, fadeInDelay);
-        }
+  function typeSubtitle() {
+    if (subtitleIndex < subtitleText.length) {
+      subtitleElement.textContent += subtitleText[subtitleIndex];
+      subtitleIndex++;
+      setTimeout(typeSubtitle, typingSpeed);
+    } else {
+      subtitleCursor.classList.add("hidden");
+      setTimeout(startFadeIn, fadeInDelay);
     }
+  }
 
-    function easeOutQuad(t) {
-        return t * (2 - t);
-    }
+  function easeOutQuad(t) {
+    return t * (2 - t);
+  }
 
-    function startFadeIn() {
-        const startTime = performance.now();
+  function startFadeIn() {
+    const startTime = performance.now();
 
-        function animateFadeIn(currentTime) {
-            const elapsed = currentTime - startTime;
-            const rawProgress = Math.min(elapsed / fadeInDuration, 1);
+    function animateFadeIn(currentTime) {
+      const elapsed = currentTime - startTime;
+      const rawProgress = Math.min(elapsed / fadeInDuration, 1);
 
-            const scaleProgress = easeOutQuad(rawProgress);
-            const opacityProgress = rawProgress;
+      const scaleProgress = easeOutQuad(rawProgress);
+      const opacityProgress = rawProgress;
 
-            const currentScale = initialScale + (1 - initialScale) * scaleProgress;
+      const currentScale = initialScale + (1 - initialScale) * scaleProgress;
 
-            if (slideshow) {
-                slideshow.style.opacity = opacityProgress;
-                slideshow.style.transform = `scale(${currentScale})`;
-            }
+      if (slideshow) {
+        slideshow.style.opacity = opacityProgress;
+        slideshow.style.transform = `scale(${currentScale})`;
+      }
 
-            if (typeof plane !== 'undefined' && plane.setOpacity) {
-                plane.setOpacity(opacityProgress);
-            }
+      if (typeof plane !== "undefined" && plane.setOpacity) {
+        plane.setOpacity(opacityProgress);
+      }
 
-            if (rawProgress < 1) {
-                requestAnimationFrame(animateFadeIn);
-            } else {
-                if (slideshow) {
-                    slideshow.style.opacity = 1;
-                    slideshow.style.transform = 'scale(1)';
-                    slideshow.style.pointerEvents = 'auto';
-                }
-                if (typeof plane !== 'undefined' && plane.setOpacity) {
-                    plane.setOpacity(1);
-                }
-            }
-        }
-
-        if (slideshow) {
-            slideshow.style.transform = `scale(${initialScale})`;
-            slideshow.style.opacity = '0';
-        }
+      if (rawProgress < 1) {
         requestAnimationFrame(animateFadeIn);
+      } else {
+        if (slideshow) {
+          slideshow.style.opacity = 1;
+          slideshow.style.transform = "scale(1)";
+          slideshow.style.pointerEvents = "auto";
+        }
+        if (typeof plane !== "undefined" && plane.setOpacity) {
+          plane.setOpacity(1);
+        }
+      }
     }
 
-    subtitleCursor.classList.add('hidden');
     if (slideshow) {
-        slideshow.style.opacity = '0';
-        slideshow.style.pointerEvents = 'none';
-        slideshow.style.transform = `scale(${initialScale})`;
+      slideshow.style.transform = `scale(${initialScale})`;
+      slideshow.style.opacity = "0";
     }
+    requestAnimationFrame(animateFadeIn);
+  }
 
-    typeTitle();
+  subtitleCursor.classList.add("hidden");
+  if (slideshow) {
+    slideshow.style.opacity = "0";
+    slideshow.style.pointerEvents = "none";
+    slideshow.style.transform = `scale(${initialScale})`;
+  }
 
-    if (aboutSection) {
-    setTimeout(() => aboutSection.classList.add('visible'), 2000);
-}
-if (pricingSection) {
-    setTimeout(() => pricingSection.classList.add('visible'), 2200);
-}
+  typeTitle();
+
+  if (aboutSection) {
+    setTimeout(() => aboutSection.classList.add("visible"), 2000);
+  }
+  if (pricingSection) {
+    setTimeout(() => pricingSection.classList.add("visible"), 2200);
+  }
 });
 
 let currentSlide = 0;
-const slides = document.querySelectorAll('.slide');
+const slides = document.querySelectorAll(".slide");
 const totalSlides = slides.length;
-const descriptionContainer = document.querySelector('.slide-description');
+const descriptionContainer = document.querySelector(".slide-description");
 
 function showSlide(index) {
+  if (index >= totalSlides) {
+    currentSlide = 0;
+  } else if (index < 0) {
+    currentSlide = totalSlides - 1;
+  } else {
+    currentSlide = index;
+  }
 
-    if (index >= totalSlides) {
-        currentSlide = 0;
-    } else if (index < 0) {
-        currentSlide = totalSlides - 1;
-    } else {
-        currentSlide = index;
-    }
+  const slidesContainer = document.querySelector(".slides");
+  slidesContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
 
-    const slidesContainer = document.querySelector('.slides');
-    slidesContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
-
-    const description = slides[currentSlide].getAttribute('data-description') || 'No description available';
-    descriptionContainer.textContent = description;
-    descriptionContainer.classList.add('active');
+  const description =
+    slides[currentSlide].getAttribute("data-description") ||
+    "No description available";
+  descriptionContainer.textContent = description;
+  descriptionContainer.classList.add("active");
 }
 
 function changeSlide(direction) {
-    showSlide(currentSlide + direction);
+  showSlide(currentSlide + direction);
 }
 
-const prevButton = document.querySelector('.prev');
-const nextButton = document.querySelector('.next');
+const prevButton = document.querySelector(".prev");
+const nextButton = document.querySelector(".next");
 if (prevButton && nextButton) {
-    prevButton.addEventListener('click', () => changeSlide(-1));
-    nextButton.addEventListener('click', () => changeSlide(1));
+  prevButton.addEventListener("click", () => changeSlide(-1));
+  nextButton.addEventListener("click", () => changeSlide(1));
 } else {
-    console.error('Slideshow buttons not found');
+  console.error("Slideshow buttons not found");
 }
 
 showSlide(currentSlide);
 
-document.addEventListener('DOMContentLoaded', () => {
-    const logoContainer = document.getElementById('logo');
-    const dropdown = document.getElementById('dropdown');
+document.addEventListener("DOMContentLoaded", () => {
+  const logoContainer = document.getElementById("logo");
+  const dropdown = document.getElementById("dropdown");
 
-    logoContainer.addEventListener('click', (e) => {
-        e.stopPropagation();
-        dropdown.classList.toggle('active');
-    });
+  logoContainer.addEventListener("click", (e) => {
+    e.stopPropagation();
+    dropdown.classList.toggle("active");
+  });
 
-    document.addEventListener('click', (e) => {
-        if (!logoContainer.contains(e.target) && dropdown.classList.contains('active')) {
-            dropdown.classList.remove('active');
-        }
-    });
+  document.addEventListener("click", (e) => {
+    if (
+      !logoContainer.contains(e.target) &&
+      dropdown.classList.contains("active")
+    ) {
+      dropdown.classList.remove("active");
+    }
+  });
 
-    dropdown.addEventListener('click', (e) => {
-        e.stopPropagation();
-    });
+  dropdown.addEventListener("click", (e) => {
+    e.stopPropagation();
+  });
 });
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   const extraImagesData = {
     "FeaturedWork1.jpg": [
       "Pictures/Work1Extra/1.jpg",
       "Pictures/Work1Extra/2.jpg",
-      "Pictures/Work1Extra/3.jpg"
+      "Pictures/Work1Extra/3.jpg",
     ],
     "FeaturedWork2.jpg": [
       "Pictures/Work2Extra/1.jpg",
       "Pictures/Work2Extra/2.jpg",
-      "Pictures/Work2Extra/3.jpg"
+      "Pictures/Work2Extra/3.jpg",
     ],
     "FeaturedWork3.jpg": [
       "Pictures/Work3Extra/1.jpg",
-      "Pictures/Work3Extra/2.jpg"
+      "Pictures/Work3Extra/2.jpg",
     ],
     "FeaturedWork4.jpg": [
       "Pictures/Work4Extra/1.jpg",
       "Pictures/Work4Extra/2.jpg",
-      "Pictures/Work4Extra/3.jpg"
+      "Pictures/Work4Extra/3.jpg",
     ],
     "FeaturedWork5.jpg": [
       "Pictures/Work5Extra/1.jpg",
       "Pictures/Work5Extra/2.jpg",
       "Pictures/Work5Extra/3.jpg",
       "Pictures/Work5Extra/4.jpg",
-      "Pictures/Work5Extra/5.jpg"
-    ]
+      "Pictures/Work5Extra/5.jpg",
+    ],
   };
 
-  const mainSlides = document.querySelectorAll('.slideshow .slide');
-  const imageViewerOverlay = document.getElementById('image-viewer-overlay');
+  const mainSlides = document.querySelectorAll(".slideshow .slide");
+  const imageViewerOverlay = document.getElementById("image-viewer-overlay");
   const body = document.body;
 
-  function openScatteredView(imagePaths) {
-    imageViewerOverlay.innerHTML = '';
+  function openGridView(imagePaths) {
+    imageViewerOverlay.innerHTML = "";
 
-    const ow = window.innerWidth;
-    const oh = window.innerHeight;
-    
-    const imageCount = imagePaths.length;
-    const gridColumns = Math.ceil(Math.sqrt(imageCount * 1.5));
-    const gridRows = Math.ceil(imageCount / gridColumns);
-    
-    const occupiedAreas = [];
-    
+    const gridWrapper = document.createElement("div");
+    gridWrapper.style.display = "flex";
+    gridWrapper.style.justifyContent = "center";
+    gridWrapper.style.alignItems = "center";
+    gridWrapper.style.width = "100%";
+    gridWrapper.style.height = "100%";
+    gridWrapper.style.padding = "40px";
+    gridWrapper.style.boxSizing = "border-box";
+    gridWrapper.style.overflow = "auto";
+
+    const gridContainer = document.createElement("div");
+    gridContainer.style.display = "grid";
+    gridContainer.style.gap = "20px";
+    gridContainer.style.maxWidth = "85%";
+    gridContainer.style.maxHeight = "80vh";
+    gridContainer.style.width = "auto";
+
+    const totalImages = imagePaths.length;
+    let columns;
+
+    if (totalImages <= 2) {
+      columns = totalImages;
+    } else if (totalImages <= 4) {
+      columns = 2;
+    } else {
+      columns = 3;
+    }
+
+    gridContainer.style.gridTemplateColumns = `repeat(${columns}, minmax(150px, 400px))`;
+
     imagePaths.forEach((src, i) => {
-      const img = document.createElement('img');
+      const img = document.createElement("img");
       img.src = src;
-      img.alt = `Scattered view ${i + 1} of ${imagePaths.length}`;
-      img.classList.add('scattered-image');
+      img.alt = `Image ${i + 1} of ${imagePaths.length}`;
 
-      const maxW = ow * 0.25;
-      const maxH = oh * 0.40;
-      
-      const cellWidth = ow / gridColumns;
-      const cellHeight = oh / gridRows;
-      
-      const gridCol = i % gridColumns;
-      const gridRow = Math.floor(i / gridColumns);
-      
-      let attempts = 0;
-      let top, left;
-      let validPosition = false;
-      
-      while (!validPosition && attempts < 8) {
-        left = Math.floor((gridCol * cellWidth) + (Math.random() * 0.3 * cellWidth));
-        top = Math.floor((gridRow * cellHeight) + (Math.random() * 0.3 * cellHeight));
-        
-        left = Math.max(20, Math.min(left, ow - maxW - 40));
-        top = Math.max(20, Math.min(top, oh - maxH - 40));
-        
-        validPosition = true;
-        for (const area of occupiedAreas) {
-          if (!(left > area.right + 20 || 
-                left + maxW < area.left - 20 || 
-                top > area.bottom + 20 || 
-                top + maxH < area.top - 20)) {
-            validPosition = false;
-            break;
-          }
-        }
-        
-        attempts++;
-      }
-      
-      occupiedAreas.push({
-        left: left,
-        top: top,
-        right: left + maxW,
-        bottom: top + maxH
-      });
-      
-      img.style.top = `${top}px`;
-      img.style.left = `${left}px`;
+      img.classList.add("scattered-image");
 
-      const finalScale = 0.9 + Math.random() * 0.4; 
-      const finalRotation = (Math.random() * 60) - 30; 
+      img.style.position = "relative";
+      img.style.top = "auto";
+      img.style.left = "auto";
+      img.style.maxWidth = "100%";
+      img.style.maxHeight = "400px";
+      img.style.width = "auto";
+      img.style.height = "auto";
+      img.style.objectFit = "cover";
 
-      img.style.setProperty('--final-scale', finalScale);
-      img.style.setProperty('--final-rotation', `${finalRotation}deg`);
-      
+      img.style.setProperty("--final-scale", "1");
+      img.style.setProperty("--final-rotation", "0deg");
+
+      gridContainer.appendChild(img);
+
       const probe = new Image();
       probe.src = src;
       probe.onload = () => {
-        imageViewerOverlay.appendChild(img);
-        setTimeout(() => img.classList.add('visible'), i * 120 + 80);
+        setTimeout(() => img.classList.add("visible"), i * 100);
       };
-      probe.onerror = () => console.error('Could not load', src);
+      probe.onerror = () => console.error("Could not load", src);
     });
 
-    imageViewerOverlay.style.display = 'block';
+    gridWrapper.appendChild(gridContainer);
+    imageViewerOverlay.appendChild(gridWrapper);
+
+    imageViewerOverlay.style.display = "block";
+
     requestAnimationFrame(() => {
-      imageViewerOverlay.classList.add('active');
-      body.classList.add('viewer-active');
+      imageViewerOverlay.classList.add("active");
+      body.classList.add("viewer-active");
     });
   }
 
-  function closeScatteredView() {
-    imageViewerOverlay.classList.remove('active');
-    body.classList.remove('viewer-active');
+  function closeGridView() {
+    imageViewerOverlay.classList.remove("active");
+    body.classList.remove("viewer-active");
 
-    const images = imageViewerOverlay.querySelectorAll('.scattered-image');
-    images.forEach(img => img.classList.remove('visible'));
+    const images = imageViewerOverlay.querySelectorAll(".scattered-image");
+    images.forEach((img) => img.classList.remove("visible"));
 
     const transitionDuration = 400;
     const timeoutId = setTimeout(() => {
-      imageViewerOverlay.style.display = 'none';
-      imageViewerOverlay.innerHTML = '';
+      imageViewerOverlay.style.display = "none";
+      imageViewerOverlay.innerHTML = "";
     }, transitionDuration);
 
-    imageViewerOverlay.addEventListener('transitionend', function clear(event) {
-      if (event.propertyName === 'opacity' && !imageViewerOverlay.classList.contains('active')) {
-        clearTimeout(timeoutId);
-        imageViewerOverlay.style.display = 'none';
-        imageViewerOverlay.innerHTML = '';
-        imageViewerOverlay.removeEventListener('transitionend', clear);
-      }
-    }, { once: true });
+    imageViewerOverlay.addEventListener(
+      "transitionend",
+      function clear(event) {
+        if (
+          event.propertyName === "opacity" &&
+          !imageViewerOverlay.classList.contains("active")
+        ) {
+          clearTimeout(timeoutId);
+          imageViewerOverlay.style.display = "none";
+          imageViewerOverlay.innerHTML = "";
+          imageViewerOverlay.removeEventListener("transitionend", clear);
+        }
+      },
+      { once: true }
+    );
   }
 
-  mainSlides.forEach(slide => {
-    slide.addEventListener('click', () => {
-      const srcPath = slide.getAttribute('src') || slide.style.backgroundImage;
+  mainSlides.forEach((slide) => {
+    slide.addEventListener("click", () => {
+      const srcPath = slide.getAttribute("src") || slide.style.backgroundImage;
       let file;
-      
-      if (srcPath.includes('url(')) {
-        file = srcPath.split('/').pop().replace(')', '').replace(/["']/g, '');
+
+      if (srcPath.includes("url(")) {
+        file = srcPath.split("/").pop().replace(")", "").replace(/["']/g, "");
       } else {
-        file = srcPath.split('/').pop();
+        file = srcPath.split("/").pop();
       }
-      
+
       const extra = extraImagesData[file];
-      extra ? openScatteredView(extra) : console.warn('No extra images for', file);
+      extra ? openGridView(extra) : console.warn("No extra images for", file);
     });
   });
 
-  imageViewerOverlay.addEventListener('click', e => {
-    if (e.target === imageViewerOverlay) closeScatteredView();
+  imageViewerOverlay.addEventListener("click", (e) => {
+    if (imageViewerOverlay.contains(e.target)) {
+      closeGridView();
+    }
   });
-  
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && imageViewerOverlay.classList.contains('active'))
-      closeScatteredView();
+
+  imageViewerOverlay.addEventListener("DOMNodeInserted", (event) => {
+    if (event.target.style && event.target.style.display === "flex") {
+      event.target.addEventListener("click", (e) => {
+        if (e.target === event.target) {
+          closeGridView();
+          e.stopPropagation();
+        }
+      });
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && imageViewerOverlay.classList.contains("active"))
+      closeGridView();
   });
 });
