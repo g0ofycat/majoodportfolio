@@ -422,7 +422,7 @@ document.addEventListener("DOMContentLoaded", () => {
       columns = 3;
     }
 
-    gridContainer.style.gridTemplateColumns = `repeat(${columns}, minmax(150px, 400px))`;
+    gridContainer.style.gridTemplateColumns = `repeat(${columns}, minmax(15vw, 40vw))`;
 
     imagePaths.forEach((src, i) => {
       const img = document.createElement("img");
